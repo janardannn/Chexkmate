@@ -14,6 +14,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size }) => {
 
     const onDrop = (src: string, tgt: string) => {
         const newGame = new Chess(game.fen());
+        // console.log(newGame.fen())
 
         let move;
         try {
