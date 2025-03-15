@@ -21,7 +21,7 @@ export default function Home() {
           </div>
 
           <div className="flex">
-            <Chessboard id="chessboard" size={size} />
+            <Chessboard id={style} size={size} />
             <div className="m-4" />
             <Analysis />
           </div>

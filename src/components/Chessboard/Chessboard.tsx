@@ -15,11 +15,17 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size }) => {
     const onDrop = (src: string, tgt: string) => {
         const newGame = new Chess(game.fen());
 
-        const move = newGame.move({
-            from: src,
-            to: tgt,
-            promotion: "q",
-        });
+        let move;
+        try {
+            move = newGame.move({
+                from: src,
+                to: tgt,
+                promotion: "q",
+            });
+        } catch (e) {
+            console.error("Illegal move:", { from: src, to: tgt });
+            return false;
+        }
 
         if (!move) {
             console.error("Illegal move:", { from: src, to: tgt });
@@ -33,6 +39,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size }) => {
         });
 
         return true;
+
     };
 
     return (
