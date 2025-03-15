@@ -1,6 +1,10 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Paytone+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Paytone+One&display=swap'); */
 
 /* :root {
   --background: #ffffff;
@@ -8,10 +12,10 @@
 }
  */
 
-@theme inline {
+/* @theme inline {
   --font-paytone: 'Paytone One', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
-}
+} */
 
 /* 
 @media (prefers-color-scheme: dark) {

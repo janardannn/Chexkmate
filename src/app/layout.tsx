@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Paytone_One, Outfit } from "next/font/google";
 import "./globals.css";
 
 const outfit = Outfit({
-  weight: "400",
   subsets: ["latin"],
   variable: "--font-outfit",
   display: "swap"
@@ -42,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} ${paytone.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} ${paytone.variable} antialiased`}
       >
         {children}
       </body>
