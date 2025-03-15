@@ -1,6 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Paytone_One, Outfit } from "next/font/google";
 import "./globals.css";
+
+const outfit = Outfit({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap"
+});
+
+const paytone = Paytone_One({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-paytone",
+  display: "swap"
+});
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,10 +37,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log(outfit.variable, paytone.variable, geistSans.variable, geistMono.variable);
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} ${paytone.variable}`}
       >
         {children}
       </body>
