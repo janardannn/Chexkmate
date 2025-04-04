@@ -79,13 +79,50 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
                 boardWidth={size}
                 position={game.fen()}
                 onPieceDrop={onDrop}
+
+                // blue deep
+                customDarkSquareStyle={{
+                    backgroundColor: "#4a6699", // Muted deep blue
+                }}
+                customLightSquareStyle={{
+                    backgroundColor: "#ecead0", // Warm ivory
+                }}
+
+                //blue light
+                // customDarkSquareStyle={{
+                //     backgroundColor: "#5a76a9", // Slightly lighter deep blue
+                // }}
+                // customLightSquareStyle={{
+                //     backgroundColor: "#ecead0", // Warm ivory (unchanged)
+                // }}
+                
+                // chess com like square colors
+                // customDarkSquareStyle={{
+                //     backgroundColor: "#4A7729", // Classic deep tournament green
+                // }}
+                // customLightSquareStyle={{
+                //     backgroundColor: "#ECECD2", // Off-white, slightly warm
+                // }}
+
+
+                // yellow and orange
+                // customSquareStyles={{
+                //     ...(highlightMove && {
+                //         [highlightMove.from]: {
+                //             backgroundColor: "rgba(255, 215, 0, 0.6)", // Warm golden yellow
+                //         },
+                //         [highlightMove.to]: {
+                //             backgroundColor: "rgba(255, 165, 0, 0.6)", // Vibrant orange
+                //         },
+                //     }),
+                // }}
                 customSquareStyles={{
                     ...(highlightMove && {
                         [highlightMove.from]: {
-                            backgroundColor: "rgba(90, 60, 180, 0.4)", // Blue with a hint of purple
+                            backgroundColor: "rgba(50, 205, 50, 0.35)", // Slightly muted LimeGreen
                         },
                         [highlightMove.to]: {
-                            backgroundColor: "rgba(120, 70, 200, 0.5)", // More vibrant bluish-purple
+                            backgroundColor: "rgba(34, 139, 34, 0.45)", // Softer ForestGreen
                         },
                     }),
                 }}
