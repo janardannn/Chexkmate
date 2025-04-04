@@ -1,5 +1,5 @@
 "use client";
-import { Paytone_One, Outfit } from "next/font/google";
+// import { Paytone_One, Outfit } from "next/font/google";
 
 // const outfit = Outfit({
 //     weight: "400",
