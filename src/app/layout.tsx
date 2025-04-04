@@ -36,7 +36,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log(outfit.variable, paytone.variable, geistSans.variable, geistMono.variable);
+  // console.log(outfit.variable, paytone.variable, geistSans.variable, geistMono.variable);
 
   return (
     <html lang="en">

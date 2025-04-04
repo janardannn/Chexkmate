@@ -31,7 +31,7 @@ export function sendCommand(command: string, callback?: (output: string) => void
     if (!stockfish) return;
 
     stockfish.onmessage = (event) => {
-        console.log("[Stockfish output]", event.data); // log everything for now
+        console.log("[Stockfish]", event.data); // log everything for now
         if (callback) callback(event.data);
     };
 
