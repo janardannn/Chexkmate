@@ -79,6 +79,22 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
                 boardWidth={size}
                 position={game.fen()}
                 onPieceDrop={onDrop}
+
+                customDarkSquareStyle={{
+                    backgroundColor: "#4a6699", // Muted deep blue
+                }}
+                customLightSquareStyle={{
+                    backgroundColor: "#ecead0", // Warm ivory
+                }}
+
+                // customDarkSquareStyle={{
+                //     backgroundColor: "#4A7729", // Classic deep tournament green
+                // }}
+                // customLightSquareStyle={{
+                //     backgroundColor: "#ECECD2", // Off-white, slightly warm
+                // }}
+
+
                 customSquareStyles={{
                     ...(highlightMove && {
                         [highlightMove.from]: {
