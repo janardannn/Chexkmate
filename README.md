@@ -1,1 +1,1 @@
-# Chexkmate: A Chess game analysis app
+# Chexkmate: A Chess game analysis and tactics training app

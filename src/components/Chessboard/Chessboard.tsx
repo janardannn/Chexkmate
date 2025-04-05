@@ -27,6 +27,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
     const [game, setGame] = useState(new Chess());
 
     const [boardOrientation, setBoardOrientation] = useState<BoardOrientation>("white");
+    const [evaluation, setEvaluation] = useState<number>(0);
     //stockfish hook
     // const { bestMove, analyzePosition } = useStockFish();
 

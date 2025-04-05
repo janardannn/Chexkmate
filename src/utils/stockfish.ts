@@ -30,8 +30,10 @@ export function initStockfish(): Worker {
 export function sendCommand(command: string, callback?: (output: string) => void) {
     if (!stockfish) return;
 
+    // let stockfishAnalysis: string[] = [];
     stockfish.onmessage = (event) => {
-        console.log("[Stockfish]", event.data); // log everything for now
+        // console.log("[Stockfish]", event.data); // log everything for now
+        // stockfishAnalysis.push(event.data);
         if (callback) callback(event.data);
     };
 
