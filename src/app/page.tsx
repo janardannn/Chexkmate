@@ -14,7 +14,8 @@ export default function Home() {
   let style = "BasicBoard";
   let size = 720;
 
-  const { bestMove, analyzePosition } = useStockFish();
+  const { bestMove, analyzePosition } = useStockFish({ depth: 20 });
+
   const [descriptiveMove, setDescriptiveMove] = useState<string>("");
 
   return (
@@ -22,14 +23,14 @@ export default function Home() {
     <div className="w-screen h-screen flex justify-center items-center" >
       {/*parent div to center everything*/}
 
-      <div className="w-[1230px] h-[910px] shadow-lg">
+      <div className="w-[1260px] h-[910px] shadow-lg">
         <div className="m-8">
           <div >
             <Header />
           </div>
 
           <div className="flex space-x-8">
-            <div className="border-3 border-black rounded-md p-[1px]">
+            <div className="p-[1px]">
               <Chessboard id={style} size={size} bestMove={bestMove} analyzePosition={analyzePosition} setDescriptiveMove={setDescriptiveMove} />
             </div>
 

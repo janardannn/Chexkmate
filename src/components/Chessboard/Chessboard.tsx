@@ -6,6 +6,10 @@ import { Chess } from "chess.js";
 
 
 import StockfishDebug from "./testStockFish";
+import EvalBar from "./EvalBar";
+import FlipBoard from "./FlipBoard";
+import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
+import { EvalBarProps } from "@/types/EvalBar";
 // // test stockfish hook
 // import { useStockFish } from "@/hooks/useStockFish";
 
@@ -23,6 +27,12 @@ interface ChessboardProps {
 const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosition, setDescriptiveMove }) => {
     const [game, setGame] = useState(new Chess());
 
+    const [boardOrientation, setBoardOrientation] = useState<BoardOrientation>("white");
+    const [evaluation, setEvaluation] = useState<EvalBarProps>({
+        type: "cp",
+        value: 0
+    }
+    );
     //stockfish hook
     // const { bestMove, analyzePosition } = useStockFish();
 
@@ -73,8 +83,23 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
     };
 
     return (
-        <div className="w-[720px] h-[720px]">
+        <div className="w-[780px] h-[720px] flex gap-x-2">
+
+            <div className="flex flex-col space-y-2">
+                <EvalBar
+                    type={evaluation.type}
+                    value={evaluation.value}
+                />
+                <FlipBoard
+                    boardOrientation={boardOrientation}
+                    setBoardOrientation={setBoardOrientation}
+                    size={30}
+                />
+            </div>
+
+
             <ChessboardComponent
+                boardOrientation={boardOrientation}
                 id={id}
                 boardWidth={size}
                 position={game.fen()}
@@ -95,7 +120,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
                 // customLightSquareStyle={{
                 //     backgroundColor: "#ecead0", // Warm ivory (unchanged)
                 // }}
-                
+
                 // chess com like square colors
                 // customDarkSquareStyle={{
                 //     backgroundColor: "#4A7729", // Classic deep tournament green
