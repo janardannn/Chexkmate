@@ -9,6 +9,7 @@ import StockfishDebug from "./testStockFish";
 import EvalBar from "./EvalBar";
 import FlipBoard from "./FlipBoard";
 import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
+import { EvalBarProps } from "@/types/EvalBar";
 // // test stockfish hook
 // import { useStockFish } from "@/hooks/useStockFish";
 
@@ -27,7 +28,11 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
     const [game, setGame] = useState(new Chess());
 
     const [boardOrientation, setBoardOrientation] = useState<BoardOrientation>("white");
-    const [evaluation, setEvaluation] = useState<number>(0);
+    const [evaluation, setEvaluation] = useState<EvalBarProps>({
+        type: "cp",
+        value: 0
+    }
+    );
     //stockfish hook
     // const { bestMove, analyzePosition } = useStockFish();
 
@@ -81,7 +86,10 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
         <div className="w-[780px] h-[720px] flex gap-x-2">
 
             <div className="flex flex-col space-y-2">
-                <EvalBar evaluation={70} />
+                <EvalBar
+                    type={evaluation.type}
+                    value={evaluation.value}
+                />
                 <FlipBoard
                     boardOrientation={boardOrientation}
                     setBoardOrientation={setBoardOrientation}
