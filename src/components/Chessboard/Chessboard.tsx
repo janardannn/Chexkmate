@@ -1,7 +1,7 @@
 "use client";
 
 import { Chessboard as ChessboardComponent } from "react-chessboard";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Chess } from "chess.js";
 
 
@@ -9,23 +9,18 @@ import StockfishDebug from "./testStockFish";
 import EvalBar from "./EvalBar";
 import FlipBoard from "./FlipBoard";
 import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
-import { EvalBarProps } from "@/types/EvalBar";
+import { EvalBarProps } from "@/types/EvalBar.type";
+import { ChessboardProps } from "@/types/Chessboard.type";
 // // test stockfish hook
 // import { useStockFish } from "@/hooks/useStockFish";
 
-interface ChessboardProps {
-    id: string;
-    size: number;
 
-    // temp
-    bestMove: string;
-    analyzePosition: (fen: string, markBestMove?: (move: string) => void) => void;
-
-    setDescriptiveMove: (move: string) => void;
-}
 
 const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosition, setDescriptiveMove }) => {
-    const [game, setGame] = useState(new Chess());
+    // const [game, setGame] = useState(new Chess());
+
+    const gameRef = useRef(new Chess());
+    const [fen, setFen] = useState(gameRef.current.fen());
 
     const [boardOrientation, setBoardOrientation] = useState<BoardOrientation>("white");
     const [evaluation, setEvaluation] = useState<EvalBarProps>({
@@ -39,48 +34,25 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
     const [highlightMove, setHighlightMove] = useState<{ from: string; to: string }>();
 
     const onDrop = (src: string, tgt: string): boolean => {
-        const newGame = new Chess(game.fen());
+        const game = gameRef.current;
+        const move = game.move({ from: src, to: tgt, promotion: "q" });
 
-        let move;
-        try {
-            move = newGame.move({
-                from: src,
-                to: tgt,
-                promotion: "q",
-            });
-        } catch (e) {
-            console.error("Illegal move:", { from: src, to: tgt });
-            return false;
-        }
+        if (!move) return false;
 
-        if (!move) {
-            console.error("Illegal move:", { from: src, to: tgt });
-            return false;
-        }
+        setFen(game.fen()); // triggers board update
 
-        setGame((prev) => {
-            if (!move) return prev;
-
-            console.log(newGame.fen())
-
-            // Analyze the position with Stockfish
-            analyzePosition(newGame.fen(), (move) => {
-                const parsedMove = parseBestMove(move);
-                if (parsedMove) {
-                    setHighlightMove(parsedMove);
-                    const desc = getDescriptiveMove(newGame.fen(), move);
-                    if (desc) {
-                        setDescriptiveMove(desc);
-                    }
-                }
-            });
-
-            return newGame;
+        analyzePosition(game.fen(), (move) => {
+            const parsedMove = parseBestMove(move);
+            if (parsedMove) {
+                setHighlightMove(parsedMove);
+                const desc = getDescriptiveMove(game.fen(), move);
+                if (desc) setDescriptiveMove(desc);
+            }
         });
 
         return true;
-
     };
+
 
     return (
         <div className="w-[780px] h-[720px] flex gap-x-2">
@@ -102,7 +74,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
                 boardOrientation={boardOrientation}
                 id={id}
                 boardWidth={size}
-                position={game.fen()}
+                position={fen}
                 onPieceDrop={onDrop}
 
                 // blue deep

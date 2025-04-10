@@ -1,4 +1,4 @@
-import { EvalBarProps } from "@/types/EvalBar";
+import { EvalBarProps } from "@/types/EvalBar.type";
 
 export default function EvalBar({ type, value }: EvalBarProps) {
     const isMate = type === "mate";

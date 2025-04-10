@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { Chess } from "chess.js";
 import { initStockfish, sendCommand } from "@/utils/stockfish";
 
-interface UseStockfishProps {
-    depth: number;
-}
+import { UseStockfishProps } from "../types/UseStockFish.type";
 
 export function useStockFish({ depth }: UseStockfishProps) {
     // const [game, setGame] = useState(new Chess());
@@ -16,9 +14,11 @@ export function useStockFish({ depth }: UseStockfishProps) {
         const worker = initStockfish();
         sendCommand("uci", (response: string) => (console.log("[Stockfish] " + response)));
         sendCommand("isready", (response: string) => (console.log("[Stockfish] " + response)));
+
         // multiple lines 
-        sendCommand("setoption name MultiPV value 3");
-        console.log("Stockfish initialized with depth: " + depth + " and MultiPV: 3");
+        // sendCommand("setoption name MultiPV value 3");
+        // console.log("Stockfish initialized with depth: " + depth + " and MultiPV: 3");
+
         return () => {
             if (worker) {
                 worker.terminate();
