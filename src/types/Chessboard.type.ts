@@ -3,7 +3,7 @@ export interface ChessboardProps {
     size: number;
 
     // temp
-    bestMove: string;
+    // bestMove: string;
     analyzePosition: (fen: string, markBestMove?: (move: string) => void) => void;
 
     setDescriptiveMove: (move: string) => void;

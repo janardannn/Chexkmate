@@ -1,6 +1,9 @@
-import { EvalBarProps } from "@/types/EvalBar.type";
+import { useChessStore } from "@/store/useChessStore";
 
-export default function EvalBar({ type, value }: EvalBarProps) {
+export default function EvalBar() {
+    const engineEval = useChessStore((state) => state.engineEval);
+    const { type, value } = engineEval;
+
     const isMate = type === "mate";
 
     const evalValue = isMate

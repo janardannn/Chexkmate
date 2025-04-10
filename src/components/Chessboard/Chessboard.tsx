@@ -1,45 +1,39 @@
 "use client";
 
 import { Chessboard as ChessboardComponent } from "react-chessboard";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Chess } from "chess.js";
-
 
 import StockfishDebug from "./testStockFish";
 import EvalBar from "./EvalBar";
 import FlipBoard from "./FlipBoard";
-import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
-import { EvalBarProps } from "@/types/EvalBar.type";
+
+import { useChessStore } from "@/store/useChessStore";
 import { ChessboardProps } from "@/types/Chessboard.type";
-// // test stockfish hook
-// import { useStockFish } from "@/hooks/useStockFish";
+import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
 
-
-
-const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosition, setDescriptiveMove }) => {
-    // const [game, setGame] = useState(new Chess());
-
+const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setDescriptiveMove }) => {
     const gameRef = useRef(new Chess());
     const [fen, setFen] = useState(gameRef.current.fen());
-
     const [boardOrientation, setBoardOrientation] = useState<BoardOrientation>("white");
-    const [evaluation, setEvaluation] = useState<EvalBarProps>({
-        type: "cp",
-        value: 0
-    }
-    );
-    //stockfish hook
-    // const { bestMove, analyzePosition } = useStockFish();
-
     const [highlightMove, setHighlightMove] = useState<{ from: string; to: string }>();
 
+    // pull from global engine eval state
+    const engineEval = useChessStore((state) => state.engineEval);
+
     const onDrop = (src: string, tgt: string): boolean => {
+
+        // testing engineEval from global store
+        console.log(engineEval);
+
         const game = gameRef.current;
         const move = game.move({ from: src, to: tgt, promotion: "q" });
 
         if (!move) return false;
 
         setFen(game.fen()); // triggers board update
+
+        console.log(fen);
 
         analyzePosition(game.fen(), (move) => {
             const parsedMove = parseBestMove(move);
@@ -53,22 +47,22 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
         return true;
     };
 
+    // testing engineEval from global store
+    // useEffect(() => {
+    //     console.log("[Chessboard] engineEval", engineEval);
+    // }, [engineEval])
 
     return (
         <div className="w-[780px] h-[720px] flex gap-x-2">
 
             <div className="flex flex-col space-y-2">
-                <EvalBar
-                    type={evaluation.type}
-                    value={evaluation.value}
-                />
+                <EvalBar />
                 <FlipBoard
                     boardOrientation={boardOrientation}
                     setBoardOrientation={setBoardOrientation}
                     size={30}
                 />
             </div>
-
 
             <ChessboardComponent
                 boardOrientation={boardOrientation}
@@ -100,7 +94,6 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, bestMove, analyzePosi
                 // customLightSquareStyle={{
                 //     backgroundColor: "#ECECD2", // Off-white, slightly warm
                 // }}
-
 
                 // yellow and orange
                 // customSquareStyles={{
