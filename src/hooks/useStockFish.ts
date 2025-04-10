@@ -21,7 +21,7 @@ export function useStockFish({ depth }: UseStockfishProps) {
         sendCommand(`go depth ${depth}`, (response: string) => {
 
             // log stockfish output
-            console.log(new Date().toLocaleString() + " [Stockfish] " + response);
+            // console.log(new Date().toLocaleString() + " [Stockfish] " + response);
 
 
             const evalResult = parseEvalAndBestMove(response);

@@ -18,7 +18,7 @@ export default function Home() {
   let style = "BasicBoard";
   let size = 720;
 
-  const { analyzePosition } = useStockFish({ depth: 20 });
+  const { analyzePosition } = useStockFish({ depth: 28 });
 
   const [descriptiveMove, setDescriptiveMove] = useState<string>("");
 

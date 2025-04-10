@@ -31,15 +31,16 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setD
 
         if (!move) return false;
 
-        setFen(game.fen()); // triggers board update
+        const newFen = game.fen();
+        setFen(newFen); // triggers board update
 
-        console.log(fen);
+        console.log(newFen);
 
-        analyzePosition(game.fen(), (move) => {
+        analyzePosition(newFen, (move) => {
             const parsedMove = parseBestMove(move);
             if (parsedMove) {
                 setHighlightMove(parsedMove);
-                const desc = getDescriptiveMove(game.fen(), move);
+                const desc = getDescriptiveMove(newFen, move);
                 if (desc) setDescriptiveMove(desc);
             }
         });
@@ -56,7 +57,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setD
         <div className="w-[780px] h-[720px] flex gap-x-2">
 
             <div className="flex flex-col space-y-2">
-                <EvalBar />
+                <EvalBar boardOrientation={boardOrientation} />
                 <FlipBoard
                     boardOrientation={boardOrientation}
                     setBoardOrientation={setBoardOrientation}
