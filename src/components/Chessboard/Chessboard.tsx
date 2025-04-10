@@ -9,6 +9,7 @@ import EvalBar from "./EvalBar";
 import FlipBoard from "./FlipBoard";
 
 import { useChessStore } from "@/store/useChessStore";
+import { useStockfishStore } from "@/store/useStockfishStore";
 import { ChessboardProps } from "@/types/Chessboard.type";
 import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
 
@@ -20,6 +21,9 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setD
 
     // pull from global engine eval state
     const engineEval = useChessStore((state) => state.engineEval);
+
+    //initial move
+    const isReady = useStockfishStore((state) => state.isReady);
 
     const onDrop = (src: string, tgt: string): boolean => {
 
@@ -47,6 +51,23 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setD
 
         return true;
     };
+
+
+    //when the component mounts, set the initial position
+    useEffect(() => {
+        if (!isReady) return;
+        const game = gameRef.current;
+        const initialFen = game.fen();
+        setFen(initialFen); // triggers board update
+        analyzePosition(initialFen, (move) => {
+            const parsedMove = parseBestMove(move);
+            if (parsedMove) {
+                setHighlightMove(parsedMove);
+                const desc = getDescriptiveMove(initialFen, move);
+                if (desc) setDescriptiveMove(desc);
+            }
+        });
+    }, [isReady])
 
     // testing engineEval from global store
     // useEffect(() => {
@@ -137,11 +158,30 @@ function parseBestMove(move: string): { from: string; to: string } | null {
 
 function getDescriptiveMove(fen: string, uciMove: string): string | null {
     const chess = new Chess(fen);
-    const move = chess.move(uciMove, { sloppy: true, verbose: true } as any);
 
-    if (!move) return null;
+    const from = uciMove.slice(0, 2);
+    const to = uciMove.slice(2, 4);
+    const promotion = uciMove.length > 4 ? uciMove[4] : undefined;
 
-    // const color = move.color === "w" ? "White" : "Black";
-    // return `${color} - ${move.san}`;
-    return `${move.san}`;
+    const legalMoves = chess.moves({ verbose: true });
+
+    const match = legalMoves.find(
+        (m) => m.from === from && m.to === to && (promotion ? m.promotion === promotion : true)
+    );
+
+    return match ? `${chess.turn() === 'w' ? 'White' : 'Black'} : ${match.san}` : null;
+
 }
+
+
+// buggy
+// function getDescriptiveMove(fen: string, uciMove: string): string | null {
+//     const chess = new Chess(fen);
+//     const move = chess.move(uciMove, { sloppy: true, verbose: true } as any);
+
+//     if (!move) return null;
+
+//     // const color = move.color === "w" ? "White" : "Black";
+//     // return `${color} - ${move.san}`;
+//     return `${move.san}`;
+// }

@@ -1,15 +1,20 @@
 import { useEffect } from "react";
 import { useChessStore } from "@/store/useChessStore";
+import { useStockfishStore } from "@/store/useStockfishStore";
 import { initStockfish, sendCommand } from "@/utils/stockfish";
 import { UseStockfishProps } from "../types/UseStockFish.type";
 
 export function useStockFish({ depth }: UseStockfishProps) {
     const setEngineEval = useChessStore((state) => state.setEngineEval);
+    const setIsReady = useStockfishStore((state) => state.setIsReady);
 
     useEffect(() => {
         const worker = initStockfish();
         sendCommand("uci", (res: string) => console.log("[Stockfish] " + res));
-        sendCommand("isready", (res: string) => console.log("[Stockfish] " + res));
+        sendCommand("isready", (res: string) => {
+            console.log("[Stockfish] " + res)
+            setIsReady(true);
+        });
 
         return () => {
             if (worker) worker.terminate();
