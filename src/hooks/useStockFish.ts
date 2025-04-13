@@ -32,13 +32,21 @@ export function useStockFish({ depth }: UseStockfishProps) {
             const evalResult = parseEvalAndBestMove(response);
             if (!evalResult) return;
 
-            const { type, value, bestMove } = evalResult;
+            let { type, value, bestMove } = evalResult;
+
+
+            if (fen.includes(" b ")) {
+                if (type === "cp" || type === "mate") {
+                    value *= -1;
+                }
+            }
 
             setEngineEval({
                 type,
                 value: type === "cp" ? value / 100 : value,
                 bestMove,
             });
+
 
             if (highlightMove) highlightMove(bestMove);
         });
