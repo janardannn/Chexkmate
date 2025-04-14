@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useChessStore } from "@/store/useChessStore";
-import { useStockfishStore } from "@/store/useStockfishStore";
+import { useChessStore } from "@/store/chess-store";
+import { useStockfishStore } from "@/store/stockfish-store";
 import { initStockfish, sendCommand } from "@/utils/stockfish";
 import { UseStockfishProps } from "../types/use-stockfish.type";
 

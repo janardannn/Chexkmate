@@ -6,13 +6,13 @@ import "@/utils/console-logger.util"
 
 import { useState } from "react";
 
-import Analysis from "@/components/Analysis";
-import Chessboard from "@/components/Chessboard/Chessboard";
-import GamePGN from "@/components/GamePGN";
-import Header from "@/components/Header";
+import Analysis from "@/components/analysis";
+import Chessboard from "@/components/chessboard/chessboard";
+import GamePGN from "@/components/game-pgn";
+import Header from "@/components/header";
 
-import { useStockFish } from "@/hooks/useStockFish";
-import { useChessStore } from "@/store/useChessStore";
+import { useStockFish } from "@/hooks/use-stockfish";
+import { useChessStore } from "@/store/chess-store";
 
 export default function Home() {
   let style = "BasicBoard";

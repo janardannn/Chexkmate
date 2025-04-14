@@ -5,11 +5,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { Chess } from "chess.js";
 
 import StockfishDebug from "./testStockFish";
-import EvalBar from "./EvalBar";
-import FlipBoard from "./FlipBoard";
+import EvalBar from "./eval-bar";
+import FlipBoard from "./flip-board";
 
-import { useChessStore } from "@/store/useChessStore";
-import { useStockfishStore } from "@/store/useStockfishStore";
+import { useChessStore } from "@/store/chess-store";
+import { useStockfishStore } from "@/store/stockfish-store";
 import { ChessboardProps } from "@/types/chessboard.type";
 import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
 

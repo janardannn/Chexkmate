@@ -1,4 +1,4 @@
-import { useChessStore } from "@/store/useChessStore";
+import { useChessStore } from "@/store/chess-store";
 
 export default function EvalBar({ boardOrientation }: { boardOrientation: "white" | "black" }) {
     const engineEval = useChessStore((state) => state.engineEval);
