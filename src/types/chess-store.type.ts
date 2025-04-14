@@ -1,5 +1,5 @@
 
-import { EngineEval } from "./EngineEval.type";
+import { EngineEval } from "./engine-eval.type";
 
 export type ChessStore = {
     engineEval: EngineEval;

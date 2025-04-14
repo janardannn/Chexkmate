@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { StockfishStore } from "@/types/StockfishStore.type";
+import { StockfishStore } from "@/types/stockfish-store.type";
 
 export const useStockfishStore = create<StockfishStore>((set) => ({
     isReady: false,

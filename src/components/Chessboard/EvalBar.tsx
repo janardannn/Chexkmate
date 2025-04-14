@@ -4,21 +4,31 @@ export default function EvalBar({ boardOrientation }: { boardOrientation: "white
     const engineEval = useChessStore((state) => state.engineEval);
     const { type, value } = engineEval;
 
+    let player: "white" | "black" | undefined = undefined;
+    if (type === "win") {
+        player = engineEval.player;
+    }
+
     const isMate = type === "mate";
+    const isDraw = type === "draw";
+
 
     const evalValue = isMate ? (value > 0 ? 10 : -10) : value;
     const clampEval = Math.max(Math.min(evalValue, 10), -10);
     const whiteHeight = ((clampEval + 10) / 20) * 100;
     const blackHeight = 100 - whiteHeight;
 
-    const displayEval =
-        isMate
-            ? `#${Math.abs(value)}`
-            : value > 9.5
-                ? "> 10+"
-                : value < -9.5
-                    ? "> -10"
-                    : value.toFixed(1);
+    const displayEval = isDraw ? "1/2-1/2"
+        : isMate ? `#${Math.abs(value)}`
+            : player ? (player == "white" ? "1-0" : "0-1")
+                : value.toFixed(1)
+
+    // values clamped to 10
+    // (value > 9.5
+    //     ? "> 10+"
+    //     : value < -9.5
+    //         ? "> -10"
+    //         : value.toFixed(1));
 
     const sections = boardOrientation === "white"
         ? [
