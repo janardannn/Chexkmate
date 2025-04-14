@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useChessStore } from "@/store/useChessStore";
 import { useStockfishStore } from "@/store/useStockfishStore";
 import { initStockfish, sendCommand } from "@/utils/stockfish";
-import { UseStockfishProps } from "../types/UseStockFish.type";
+import { UseStockfishProps } from "../types/use-stockfish.type";
 
 export function useStockFish({ depth }: UseStockfishProps) {
     const setEngineEval = useChessStore((state) => state.setEngineEval);

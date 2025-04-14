@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ChessStore } from "@/types/ChessStore.type";
+import { ChessStore } from "@/types/chess-store.type";
 
 export const useChessStore = create<ChessStore>((set) => ({
     engineEval: {

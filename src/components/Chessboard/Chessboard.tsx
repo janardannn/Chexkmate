@@ -10,7 +10,7 @@ import FlipBoard from "./FlipBoard";
 
 import { useChessStore } from "@/store/useChessStore";
 import { useStockfishStore } from "@/store/useStockfishStore";
-import { ChessboardProps } from "@/types/Chessboard.type";
+import { ChessboardProps } from "@/types/chessboard.type";
 import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
 
 const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setDescriptiveMove }) => {
@@ -21,6 +21,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setD
 
     // pull from global engine eval state
     const engineEval = useChessStore((state) => state.engineEval);
+    const setEngineEval = useChessStore((state) => state.setEngineEval);
 
     //initial move
     const isReady = useStockfishStore((state) => state.isReady);
@@ -35,8 +36,29 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setD
 
         if (!move) return false;
 
+
         const newFen = game.fen();
         setFen(newFen); // triggers board update
+
+        if (game.isGameOver()) {
+
+            if (game.isDraw() || game.isStalemate()) {
+                setEngineEval({
+                    type: "draw",
+                    value: 0,
+                    bestMove: engineEval.bestMove,
+                });
+            }
+
+            else setEngineEval({
+                type: "win",
+                player: game.turn() === "w" ? "black" : "white",
+                value: game.turn() === "w" ? -99 : 99,
+                bestMove: engineEval.bestMove,
+            });
+            console.log("Game over");
+            return true;
+        }
 
         console.log(newFen);
 

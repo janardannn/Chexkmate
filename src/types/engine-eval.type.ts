@@ -1,5 +1,6 @@
 export interface EngineEval {
-    type: "cp" | "mate";
+    type: "cp" | "mate" | "win" | "draw";
+    player?: "white" | "black";
     value: number;
     bestMove: string;
     // otherMoves: string[];
