@@ -1,4 +1,7 @@
 "use client";
+
+import { useEffect, useState } from "react";
+
 // import { Paytone_One, Outfit } from "next/font/google";
 
 // const outfit = Outfit({
@@ -16,17 +19,28 @@ const Github = (size: string) => {
 }
 
 export default function Header() {
+
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 900);
+        check();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
+
+    // w-[1131px] 
     return (
-        <div className={`w-[1131px] flex justify-between items-center mb-12`}>
-            <h1 className={`text-[48px] font-paytone`}>Chexkmate</h1>
-            <div className={`flex items-center text-[18px] font-outfit font-[400]`}>
+        <div className={` flex justify-between items-center mb-12`}>
+            <h1 className={`text-[32px] not-mobile:text-[48px] font-paytone`}>Chexkmate</h1>
+            <div className={`flex items-center text-[12px] not-mobile:text-[18px] font-outfit font-[400]`}>
                 <a
                     href="https://github.com/janardannn/Chexkmate"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center"
                 >
-                    {Github("25")}
+                    {isMobile ? Github("16.67") : Github("25")}
                     <span>/janardannn</span>
                 </a>
             </div>

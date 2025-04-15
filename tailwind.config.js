@@ -5,6 +5,10 @@ const config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        "mobile": { 'max': '900px' },
+        "not-mobile": { 'min': '901px' },
+      },
       fontFamily: {
         outfit: ["var(--font-outfit)", ...defaultTheme.fontFamily.sans],
         paytone: ["var(--font-paytone)", "sans-serif"],

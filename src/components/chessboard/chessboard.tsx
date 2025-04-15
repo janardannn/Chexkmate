@@ -97,21 +97,21 @@ const Chessboard: React.FC<ChessboardProps> = ({ id, size, analyzePosition, setD
     // }, [engineEval])
 
     return (
-        <div className="w-[780px] h-[720px] flex gap-x-2">
+        <div className="flex gap-x-2" style={{ width: size + 60, height: size }}>
 
-            <div className="flex flex-col space-y-2">
-                <EvalBar boardOrientation={boardOrientation} />
+            <div className="flex flex-col justify-between">
+                <EvalBar boardSize={size} boardOrientation={boardOrientation} />
                 <FlipBoard
+                    boardSize={size}
                     boardOrientation={boardOrientation}
                     setBoardOrientation={setBoardOrientation}
-                    size={30}
                 />
             </div>
 
             <ChessboardComponent
+                boardWidth={size}
                 boardOrientation={boardOrientation}
                 id={id}
-                boardWidth={size}
                 position={fen}
                 onPieceDrop={onDrop}
 

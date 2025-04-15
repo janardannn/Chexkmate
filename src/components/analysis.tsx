@@ -1,16 +1,31 @@
 "use client";
 
-import React from "react";
+import { AnalysisProps } from "@/types/analysis.type";
+import { useEffect, useState } from "react";
 
-interface AnalysisProps {
-    bestMove: string;
-}
+export default function Analysis({ bestMove, boardSize }: AnalysisProps) {
+    const height = boardSize * 0.878;
 
-export default function Analysis({ bestMove }: AnalysisProps) {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 900);
+        check();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
+
+
     return (
-        <div className="border-2 border-black w-[380px] h-[651px] p-2 rounded-sm">
+        <div
+            className={`border-2 border-black not-mobile:w-full p-2 rounded-sm`}
+            style={{
+                height,
+                width: isMobile ? `${boardSize}px` : "100%",
+            }}
+        >
             <p className="text-3xl font-paytone">Game Analysis</p>
-            <div className="mt-6 text-xl font-outfit flex ">
+            <div className="mt-6 text-xl font-outfit flex">
                 Best Move: <div className="ml-2 font-bold">{bestMove}</div>
             </div>
         </div>

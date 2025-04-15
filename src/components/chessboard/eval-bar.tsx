@@ -1,6 +1,9 @@
 import { useChessStore } from "@/store/chess-store";
+import { EvalBarProps } from "@/types/eval-bar.type";
 
-export default function EvalBar({ boardOrientation }: { boardOrientation: "white" | "black" }) {
+export default function EvalBar({ boardSize, boardOrientation }: EvalBarProps) {
+    const height = boardSize * .93;
+    const width = boardSize * 0.067;
     const engineEval = useChessStore((state) => state.engineEval);
     const { type, value } = engineEval;
 
@@ -41,7 +44,10 @@ export default function EvalBar({ boardOrientation }: { boardOrientation: "white
         ];
 
     return (
-        <div className="relative h-[670px] w-[55px] border-2 border-black rounded-sm overflow-hidden flex flex-col">
+        <div
+            className="border-2 border-black rounded-sm overflow-hidden flex flex-col"
+            style={{ height, width }}
+        >
             {sections.map(({ height, bg, textColor, isActive, align, textAlign }, idx) => (
                 <div
                     key={idx}
@@ -49,7 +55,7 @@ export default function EvalBar({ boardOrientation }: { boardOrientation: "white
                     className={`${bg} flex ${align} justify-center transition-all duration-300`}
                 >
                     {isActive && height > 15 && (
-                        <span className={`${textColor} text-sm ${textAlign} font-semibold select-none`}>
+                        <span className={`${textColor} text-sm ${textAlign} text-[10.5px] font-semibold not-mobile:text-[15.75px] select-none`}>
                             {displayEval}
                         </span>
                     )}

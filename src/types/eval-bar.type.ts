@@ -1,5 +1,6 @@
 export interface EvalBarProps {
-    type: "cp" | "mate" | "win" | "draw";
-    value: number;
-    boardOrient: "white" | "black";
+    boardSize: number;
+    // type: "cp" | "mate" | "win" | "draw";
+    // value: number;
+    boardOrientation: "white" | "black";
 }
