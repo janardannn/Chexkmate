@@ -55,7 +55,7 @@ export default function EvalBar({ boardSize, boardOrientation }: EvalBarProps) {
                     className={`${bg} flex ${align} justify-center transition-all duration-300`}
                 >
                     {isActive && height > 15 && (
-                        <span className={`${textColor} text-sm ${textAlign} text-[10.5px] font-semibold not-mobile:text-[15.75px] select-none`}>
+                        <span className={`${textColor} text-sm ${textAlign} small-mobile-text:text-[8.1px] mobile-text:text-[10px] text-[10.5px] font-semibold not-mobile:text-[15.75px] select-none`}>
                             {displayEval}
                         </span>
                     )}
