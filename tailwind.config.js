@@ -6,6 +6,8 @@ const config = {
   theme: {
     extend: {
       screens: {
+        "small-mobile-text": { 'max': '450px' },
+        "mobile-text": { 'min': '460px', 'max': '700px' },
         "mobile": { 'max': '900px' },
         "not-mobile": { 'min': '901px' },
       },
